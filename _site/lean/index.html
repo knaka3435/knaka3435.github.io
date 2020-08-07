@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    
     <meta charset="UTF-8">
 
 <!-- Begin Jekyll SEO tag v2.6.1 -->
@@ -14,25 +16,30 @@
 <meta property="og:url" content="http://localhost:4000/lean/index" />
 <meta property="og:site_name" content="My blog" />
 <script type="application/ld+json">
-{"@type":"WebPage","description":"I do Lean and some math.","url":"http://localhost:4000/lean/index","headline":"Ring Theory in Lean","@context":"https://schema.org"}</script>
+{"@type":"WebPage","headline":"Ring Theory in Lean","description":"I do Lean and some math.","url":"http://localhost:4000/lean/index","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link rel="stylesheet" href="/assets/css/style.css?v=HEAD">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=fda9c44158240c431992cf97979bd98da45c80eb">
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">My blog</h1>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Ring Theory in Lean</h1>
       <h2 class="project-tagline">I do Lean and some math.</h2>
       
         <a href="https://github.com/mushokunosora/mushokunosora.github.io" class="btn">View on GitHub</a>
       
       
-    </section>
+    </header>
 
-    <section class="main-content">
-      <h1 id="about-the-project">About the project</h1>
+    <main id="content" class="main-content" role="main">
+      <h1 id="ring-theory-in-lean">Ring Theory in Lean</h1>
+
+<h2 id="about-the-project">About the project</h2>
 <p>The goal of the project is to formalize some of the fundamental mathematics that is central to Algebraic Number Theory, mainly focusing on dedekind domains and the many, many equvialent definitions, some of which included looking at discrete valuation rings (which coincidentally has many, many equivalent definitions). Most of the filled-in proofs however, consist of statements about other things, but in doing so, provides a stronger foundation for the future.</p>
 
 <p>Special thanks to my project advisor, Apurva Nakade, who has helped explain the math some of the APIs (<script type="math/tex">% <![CDATA[
@@ -44,7 +51,7 @@
 
 <p>Here we deal exclusively with commutative rings with identity, as they are truth.</p>
 
-<p>The localization of a ring at <script type="math/tex">S</script> is the set of all elements <script type="math/tex">\{\frac{r}{s} \ \| \ r \in R, \ s \in S \}</script>. The set <script type="math/tex">S</script> has some structure, which is that it is closed under multiplication (a multiplicative submonoid of R) and typically contains the multiplicative identity. An interesting result is that if <script type="math/tex">0 \in S</script>, then the localization of <script type="math/tex">R</script> at <script type="math/tex">S</script> is the <code class="language-plaintext highlighter-rouge">zero ring</code> which has only one element, <script type="math/tex">0</script>, and this is due to the fact that <script type="math/tex">0</script> is assumed to be a unit, and the multiplication rule by <script type="math/tex">0</script> still applies.</p>
+<p>The localization of a ring at <script type="math/tex">S</script> is the set of all elements <script type="math/tex">\{\frac{r}{s} \mid \ r \in R, \ s \in S \}</script>. The set <script type="math/tex">S</script> has some structure, which is that it is closed under multiplication (a multiplicative submonoid of R) and typically contains the multiplicative identity. An interesting result is that if <script type="math/tex">0 \in S</script>, then the localization of <script type="math/tex">R</script> at <script type="math/tex">S</script> is the <code class="language-plaintext highlighter-rouge">zero ring</code> which has only one element, <script type="math/tex">0</script>, and this is due to the fact that <script type="math/tex">0</script> is assumed to be a unit, and the multiplication rule by <script type="math/tex">0</script> still applies.</p>
 
 <p>Somewhat confusingly, the localization of <script type="math/tex">R</script> at a prime ideal <script type="math/tex">P</script> is actually the localization of <script type="math/tex">R</script> at <script type="math/tex">R-P</script>, which is the set-theoretic complement of <script type="math/tex">P</script> (although the motivation is probably a mixture of laziness and wanting an interesting localization). If <script type="math/tex">R</script> is an integral domain, this results in a <code class="language-plaintext highlighter-rouge">local ring</code> which has the property that the only nonzero prime ideal is <script type="math/tex">P</script>, and is of particular interest to the theory of algebraic geometry (although this is beyond me). More importantly, one of the definitions of a dedekind domain is that the localization at any nonzero prime is a discrete valuation ring (which is a special type of local ring).</p>
 
@@ -59,9 +66,9 @@ One can analogously talk about Noetherian modules (here ideals get replaced by s
 <h2 id="code">Code</h2>
 
 <h3 id="localizations-of-integral-domains">Localizations of integral domains</h3>
-<p>The following is a proof that any nontrivial localization of an integral domain, <script type="math/tex">R</script>, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in <script type="math/tex">S</script>, we do not introduce zero divisors (also here we require that <script type="math/tex">0 \nin S</script>, as otherwise this would break rule 4 &gt;! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).</p>
+<p>The following is a proof that any nontrivial localization of an integral domain, <script type="math/tex">R</script>, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in <script type="math/tex">S</script>, we do not introduce zero divisors (also here we require that <script type="math/tex">0 \not\in S</script>, as otherwise this would break rule 4 &gt;! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).</p>
 
-<pre><code class="language-lean">theorem local_id_is_id (S : submonoid R) (zero_non_mem : ((0 : R) ∉  S)) {f : localization_map S (localization S)} : 
+<figure class="highlight"><pre><code class="language-lean" data-lang="lean">theorem local_id_is_id (S : submonoid R) (zero_non_mem : ((0 : R) ∉  S)) {f : localization_map S (localization S)} : 
   is_integral_domain (localization S) :=
 begin
   --the `split` tactic allows us to take (condition 1) AND (condition 2) AND ... and lets us instead prove (condition 1), then (condition 2), etc. 
@@ -115,8 +122,7 @@ begin
       { right, rw b_eq_zero at bkey,
         exact localization_map.eq_zero_of_fst_eq_zero f bkey rfl },
     },
-end
-</code></pre>
+end</code></pre></figure>
 
 <p>As an immediate corollary, we have the fact that the localization at a prime ideal P, is also an integral domain.</p>
 <pre><code class="language-lean">
@@ -177,8 +183,6 @@ end
         
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
       </footer>
-    </section>
-
-    
+    </main>
   </body>
 </html>

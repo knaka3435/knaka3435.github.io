@@ -3,8 +3,9 @@
 title: Ring Theory in Lean
 permalink: /lean/index
 ---
+# Ring Theory in Lean
 
-# About the project
+## About the project
 The goal of the project is to formalize some of the fundamental mathematics that is central to Algebraic Number Theory, mainly focusing on dedekind domains and the many, many equvialent definitions, some of which included looking at discrete valuation rings (which coincidentally has many, many equivalent definitions). Most of the filled-in proofs however, consist of statements about other things, but in doing so, provides a stronger foundation for the future.
 
 Special thanks to my project advisor, Apurva Nakade, who has helped explain the math some of the APIs ($$\varepsilon<0$$ documentation) are trying to capture, as well as answering a variety of questions from basic lean syntax to some really vague questions (left as comments in the code) that has made a proof magnitudes easier by using some mathlib lemma (summoned from where???). Also without the `Teaching Math to Computers` class, I would not doubt learning the basics of Lean would have much longer.
@@ -16,7 +17,7 @@ Also, big thanks to Jalex Stark, who has helped transform some really hacky solu
 
 Here we deal exclusively with commutative rings with identity, as they are truth.
 
-The localization of a ring at $$S$$ is the set of all elements $$\{\frac{r}{s} \ \| \ r \in R, \ s \in S \}$$. The set $$S$$ has some structure, which is that it is closed under multiplication (a multiplicative submonoid of R) and typically contains the multiplicative identity. An interesting result is that if $$0 \in S$$, then the localization of $$R$$ at $$S$$ is the `zero ring` which has only one element, $$0$$, and this is due to the fact that $$0$$ is assumed to be a unit, and the multiplication rule by $$0$$ still applies.
+The localization of a ring at $$S$$ is the set of all elements $$\{\frac{r}{s} \mid \ r \in R, \ s \in S \}$$. The set $$S$$ has some structure, which is that it is closed under multiplication (a multiplicative submonoid of R) and typically contains the multiplicative identity. An interesting result is that if $$0 \in S$$, then the localization of $$R$$ at $$S$$ is the `zero ring` which has only one element, $$0$$, and this is due to the fact that $$0$$ is assumed to be a unit, and the multiplication rule by $$0$$ still applies.
 
 Somewhat confusingly, the localization of $$R$$ at a prime ideal $$P$$ is actually the localization of $$R$$ at $$R-P$$, which is the set-theoretic complement of $$P$$ (although the motivation is probably a mixture of laziness and wanting an interesting localization). If $$R$$ is an integral domain, this results in a `local ring` which has the property that the only nonzero prime ideal is $$P$$, and is of particular interest to the theory of algebraic geometry (although this is beyond me). More importantly, one of the definitions of a dedekind domain is that the localization at any nonzero prime is a discrete valuation ring (which is a special type of local ring).
 
@@ -29,9 +30,9 @@ One can analogously talk about Noetherian modules (here ideals get replaced by s
 ## Code
 
 ### Localizations of integral domains
-The following is a proof that any nontrivial localization of an integral domain, $$R$$, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in $$S$$, we do not introduce zero divisors (also here we require that $$0 \nin S$$, as otherwise this would break rule 4 >! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).
+The following is a proof that any nontrivial localization of an integral domain, $$R$$, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in $$S$$, we do not introduce zero divisors (also here we require that $$0 \not\in S$$, as otherwise this would break rule 4 >! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).
 
-```lean
+{% highlight Lean %}
 theorem local_id_is_id (S : submonoid R) (zero_non_mem : ((0 : R) ∉  S)) {f : localization_map S (localization S)} : 
   is_integral_domain (localization S) :=
 begin
@@ -87,7 +88,7 @@ begin
         exact localization_map.eq_zero_of_fst_eq_zero f bkey rfl },
     },
 end
-```
+{% endhighlight %}
 
 As an immediate corollary, we have the fact that the localization at a prime ideal P, is also an integral domain.
 ```lean

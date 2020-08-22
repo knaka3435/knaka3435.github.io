@@ -250,7 +250,8 @@ DEPENDENCIES
   github-pages
   jekyll (~> 3.8.7)
   jekyll-feed (~> 0.12)
-  minima (~> 2.5)
+  kramdown
+  minima (~> 2.5, >= 2.3.0)
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)

@@ -1,16 +1,15 @@
 ---
-#layout: page
+layout: page
 title: Ring Theory in Lean
 permalink: /lean/index
 ---
-# Ring Theory in Lean
 
 ## About the project
 The goal of the project is to formalize some of the fundamental mathematics that is central to Algebraic Number Theory, mainly focusing on dedekind domains and the many, many equvialent definitions, some of which included looking at discrete valuation rings (which coincidentally has many, many equivalent definitions). Most of the filled-in proofs however, consist of statements about other things, but in doing so, provides a stronger foundation for the future.
 
-Special thanks to my project advisor, Apurva Nakade, who has helped explain the math some of the APIs ($$\varepsilon<0$$ documentation) are trying to capture, as well as answering a variety of questions from basic lean syntax to some really vague questions (left as comments in the code) that has made a proof magnitudes easier by using some mathlib lemma (summoned from where???). Also without the `Teaching Math to Computers` class, I would not doubt learning the basics of Lean would have much longer.
+Special thanks to my project advisor, Apurva Nakade, who has helped explain the math some of the APIs (with $$\varepsilon<0$$ documentation) are trying to capture, as well as answering a variety of questions from basic lean syntax to some really vague questions (left as comments in the code) that has made a proof magnitudes easier. Also without the `Teaching Math to Computers` class, I would not doubt learning the basics of Lean would have taken much longer.
 
-Also, big thanks to Jalex Stark, who has helped transform some really hacky solutions into ones that were less unidiomatic, as well as providing insight as to how to properly do things in Lean (such as instances which borderline on witchcraft). Not to mention the monumental task of trying to optimize spaghetti code.
+Also, big thanks to Jalex Stark, who has helped transform some really hacky solutions into rational ones, as well as providing insight as to how to properly do things (like instances) in Lean. Not to mention the monumental task of trying to optimize spaghetti code.
 
 
 ## Some background
@@ -30,7 +29,7 @@ One can analogously talk about Noetherian modules (here ideals get replaced by s
 ## Code
 
 ### Localizations of integral domains
-The following is a proof that any nontrivial localization of an integral domain, $$R$$, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in $$S$$, we do not introduce zero divisors (also here we require that $$0 \not\in S$$, as otherwise this would break rule 4 >! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).
+The following is a proof that any nontrivial localization of an integral domain, $$R$$, is yet another integral domain. Intuitively, this makes sense, as when we divide out by the things in $$S$$, we do not introduce zero divisors (also here we require that $$0 \not\in S$$, as otherwise this would break rule 4! Also the zero ring is not an integral domain, as there does exist at least two distinct elements).
 
 {% highlight Lean %}
 theorem local_id_is_id (S : submonoid R) (zero_non_mem : ((0 : R) ∉  S)) {f : localization_map S (localization S)} : 
@@ -143,3 +142,101 @@ begin
 end
 ```
 
+
+# Followup
+In the weeks following Mathcamp, I found that is was very hard to put Lean down, especially when I was so close to finishing up a few loose ends, and so I continued to work on it. Also, the ominous saying "whatever isn't PRed into mathlib is forever lost" was a great motivator! And so, I made a [pull request](https://github.com/leanprover-community/mathlib/pull/3846) that contained all of the finished work that I made (and was improved by the community by a lot!), and a [branch](https://github.com/leanprover-community/mathlib/tree/mushokunosora-dedekind) for everything else that hasn't been tidied up (whose most recent accomplishment is the fact that every ideal in a dedekind domain contains some nonempty product of nonzero prime ideals). 
+
+## Noetherian
+
+So the original lean proof is as follows, and it is essentially the following paper-pencil proof.
+
+First, we wish to show that if any nonempty set of submodules has a maximal submodule, then it is finitely generated.
+Let $$I$$ be any submodule, consider the set $$S = \{ J \ \mid \ J \subseteq I, \ J \ \textrm{is finitely generated}\}$$, this set has maximal submodule $$I$$ (as otherwise, we can indefinitely keep on throwing in more generators), and since $$I \in S$$, we have that $$I$$ is finitely generated.
+
+Now, for the converse, we actually use the equivalent definition that for every submodule, there does not exist an infinitely ascending chain of submodule inclusions. For the sake of contradiction, suppose that there is a nonempty set such that it does not have a maximal submodule, then we can start off with some element of that set, and choose some element that contains it (this is always possible, as there is no maximal element), but since we can do this indefinitely, we have constructed an infinitely ascending chain, a contradiction.
+
+```lean
+theorem set_has_maximal_iff_noetherian {R'' : Type u} [ring R''] {X : Type u} [add_comm_group X] [module R'' X] : (∀(a : set $ submodule R'' X), a.nonempty → ∃ (M ∈ a), ∀ (I ∈ a), M ≤ I → I=M) ↔ is_noetherian R'' X := 
+begin
+  split; intro h,
+  { --want to show that every submodule is finitely R-generated given that every nonempty set of submodules has a maximal one
+    split,
+    --let I be any submodule of X
+    intro I,
+    --Consider the set of all finitely generated submodules contained in I
+    let S := {J : submodule R'' X | J ≤ I ∧ J.fg},
+    --We claim that S is in fact nonempty, and contains the 0-submodule (⊥)
+    have h2 : S.nonempty, { use (⊥ : submodule R'' X), convert submodule.fg_bot, simp },
+    --Since S is nonempty, there exists a submodule, M, that is maximal in S
+    --such that M ≤ I and M is finitely generated
+    rcases h S h2 with ⟨ M, ⟨hMI, ⟨Mgen, hMgen⟩⟩, max⟩,
+    --It suffices to find a finite set that spans I.
+    rw submodule.fg_def,
+    --We contrapose, and now we have that there does not exist a finite spanning set for I
+    --and we wish to prove that there exists a submodule J such that J is in S, and J > M,
+    contrapose! max,
+    --since M is finitely generated, this is fairly obvious (lean is not as easy to convince)
+    have : ∃ x ∈ I, x ∉ M,
+    { have := max ↑Mgen (finset.finite_to_set Mgen), 
+      contrapose! this, 
+      rw hMgen, ext, tauto },
+    --now, let's talk about this x!
+    rcases this with ⟨x, hxI, hxM⟩,
+    --we can make a larger submodule by using the generators of M and x.
+    use submodule.span R'' (↑Mgen ∪ {x}), split,
+    { --we prove that it is indeed in S.
+      split,
+      { --it suffices to show that all of the generators are elements of I, since the span of subsets is monotonic
+        suffices : (↑Mgen : set X) ∪ {x} ⊆ I, { convert submodule.span_mono this, simp },
+        --we verify that all of them are elements
+        have : (↑Mgen : set X) ⊆ M, { convert submodule.subset_span, cc },
+        apply set.union_subset, { exact set.subset.trans this hMI }, { simp [hxI] } },
+      --since the union of finite sets are also finite, we have that it is finitely generated.
+      { rw submodule.fg_def, use (↑Mgen ∪ {x}), split, { split, apply_instance,}, refl } },
+    split, 
+    -- M ≤ M+(x) since the generators of M are a subset of the generators of M+(x)
+    { rw ← hMgen, convert submodule.span_mono _, simp },
+    -- finally, we have that M ≠ M+(x) because otherwise, x ∈ M, contrary to assumption.
+    { contrapose! hxM, rw ← hxM, apply submodule.subset_span, exact (↑Mgen : set X).mem_union_right rfl,} },
+  { --Now, we prove the converse.
+    --let A be some set with a ∈ A.
+    rintros A ⟨a, ha⟩, 
+    --we have that a module is notherian if and only if it > is well founded
+    rw is_noetherian_iff_well_founded at h, 
+    --more specifically, there cannot be an infinitely descending sequence.
+    rw rel_embedding.well_founded_iff_no_descending_seq at h,
+    --suppose that there is no maximal element of A, then for all elements of A
+    --there exists one that is strictly larger than it.
+    by_contra hyp,
+    push_neg at hyp,
+    --we show that this conflicts with the fact that there are no infinitely descending sequences.
+    apply h,
+    constructor,
+    --we rephrase the earlier condition
+    have h' : ∀ (M : submodule R'' X), M ∈ A → (∃ (I : submodule R'' X), I ∈ A ∧ M < I),
+    {
+      intros m mina,
+      rcases hyp m mina with ⟨I, iina, mlei, mneqi⟩,
+      use I, split, exact iina, split, exact mlei, intro ilem, apply mneqi, exact le_antisymm ilem mlei,
+    },
+    have h'' : ∀ M : A, ∃ I : A, (M : submodule R'' X) < I,
+    { rintros ⟨M, M_in⟩,
+      rcases h' M M_in with ⟨I, I_in, hMI⟩,
+      exact ⟨⟨I, I_in⟩, hMI⟩ },
+    --we recursively construct the chain by using dependent choice
+    --after the nth element, we choose some element above it, and so on.
+    let f : ℕ → A := λ n, nat.rec_on n ⟨a, ha⟩ (λ n M, classical.some (h'' M)),
+    exact rel_embedding.nat_gt (coe ∘ f) (λ n, classical.some_spec (h'' $ f n)),
+  },
+end
+```
+
+But, the final result ended up being much shorter, and ended up requiring to build up a bit more theory about well foundednes in relation to partially ordered sets.
+```lean
+theorem set_has_maximal_iff_noetherian {R M} [ring R] [add_comm_group M] [module R M] :
+  (∀ a : set $ submodule R M, a.nonempty → ∃ M' ∈ a, ∀ I ∈ a, M' ≤ I → I = M') ↔ is_noetherian R M :=
+by rw [is_noetherian_iff_well_founded, well_founded.well_founded_iff_has_max']
+```
+Literally a one-liner.
+### Other developments
+Due to some pull-requests (that happened a few days before), the first localization proof had been rendered obsolete (and was more useful in its generalized form), but the prime localization corollary followed nicely from the newer one.

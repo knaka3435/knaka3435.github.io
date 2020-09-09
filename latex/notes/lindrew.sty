@@ -1,0 +1,151 @@
+\ProvidesPackage{lindrew}[2019/05/26] % with great amounts of help from Jason Chen <3
+
+\newif\iflinserif \linseriffalse % by default, uses cmbright sans serif font. 
+\newif\iflinclass \linclasstrue % by default, numbers all theorems/definitions from 1 to N w/o regard for section
+
+\DeclareOption{serif}{\linseriftrue} 
+\DeclareOption{formal}{\linclassfalse} % if you want a coherent document where theorems in section 1 are "theorem 1.x"
+
+\ProcessOptions*
+
+\iflinserif\else
+    \usepackage{cmbright}
+\fi
+
+\usepackage{amsmath, amssymb, amsthm} % standard
+\usepackage[svgnames, dvipsnames, usenames]{xcolor}
+\usepackage[colorlinks]{hyperref} % inserting links - copied from Jason
+\PassOptionsToPackage{colorlinks}{hyperref}
+\hypersetup{urlcolor = RedViolet, linkcolor = RoyalBlue, citecolor = ForestGreen}
+
+\usepackage[capitalize]{cleveref} % for cross-referencing theorems, etc.
+\usepackage{graphicx} % for putting pictures
+\usepackage[T1]{fontenc} % for accents, etc.
+\usepackage{verbatim} % for commenting out sections of text
+\usepackage[left=0.8in, top=1.6cm, bottom=2.4cm, right=0.8in]{geometry}
+\usepackage[nodisplayskipstretch, onehalfspacing]{setspace} % 1.5 spacing
+\usepackage{tikz, tikz-cd} % for drawing pictures
+
+\newcommand{\vocab}[1]{\textbf{\color{blue!90}\boldmath #1}}
+
+% Fixes itemize (thanks, Jason)
+\usepackage{enumitem}
+\setlist{noitemsep, topsep = 0.4em}
+\renewcommand\labelitemi{\raisebox{0.15em}{\tiny$\bullet$}}
+
+% Changes size of section headers
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries\sffamily}
+\titleformat{\subsection}{\Large\bfseries\sffamily}{\thesubsection}{0.4cm}{} 
+
+
+% Blackboard bold
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\ZZ}{\mathbb Z}
+\renewcommand{\AA}{\mathbb A}
+\newcommand{\diff}{\operatorname{diff}}
+
+% various math expressions that shouldn't be italicized 
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator*{\lcm}{lcm}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\id}{id}
+
+% can't use DeclareMathOperator because already defined
+\renewcommand{\Re}{\operatorname{Re}} 
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\ker}{\operatorname{ker}}
+\renewcommand{\mod}[1]{\ \text{mod}\ #1}
+\newcommand{\gal}[2]{\operatorname{Gal}\left(#1 \big/ #2 \right)}
+\newcommand{\disc}{\operatorname{disc}}
+% other convenient abbreviations
+\newcommand{\eps}{\varepsilon}
+
+% theorem boxes
+\usepackage{thmtools}
+\usepackage[framemethod = TikZ]{mdframed}
+
+\usepackage{silence} % for suppressing warnings (thanks, Jason)
+\WarningFilter{mdframed}{You got a bad break}
+
+\mdfsetup{
+	linewidth = 0.3mm,
+	innertopmargin = 2mm,
+	innerbottommargin = 3.5mm,
+	innerleftmargin = 3mm,
+	innerrightmargin = 3mm
+} % adjusts boundaries of boxes
+
+\newcommand{\thmboxstyle}[4]{
+	\mdfdefinestyle{#2}{
+		linecolor = #3,
+		backgroundcolor = #4,
+		nobreak = true
+	}
+	\declaretheoremstyle[
+		headfont = \sffamily\bfseries\color{#3},
+		mdframed = {style = #2},
+		headpunct = {\\[0.4pt]},
+		postheadspace = {0pt},
+	]{#1}
+}
+
+% four different colors of boxes
+
+\thmboxstyle{defbox}{mdredbox}{red}{orange!5}
+\thmboxstyle{thmbox}{mdbluebox}{blue!90!red}{cyan!4}
+\thmboxstyle{exbox}{mdgreenbox}{green!70!black}{teal!4}
+\thmboxstyle{notebox}{mdorangebox}{orange!50!brown}{yellow!5!olive!5}
+
+\iflinclass
+    \declaretheorem[style = thmbox, name = Theorem]{theorem}
+\else
+    \declaretheorem[style = thmbox, name = Theorem, numberwithin = section]{theorem}
+\fi
+
+\declaretheorem[style = thmbox, name = Lemma, sibling = theorem]{lemma}
+\declaretheorem[style = thmbox, name = Proposition, sibling = theorem]{proposition}
+\declaretheorem[style = thmbox, name = Corollary, sibling = theorem]{corollary}
+\declaretheorem[style = thmbox, name = Conjecture, sibling = theorem]{conjecture}
+\declaretheorem[style = thmbox, name = Algorithm, sibling = theorem]{algorithm}
+
+\declaretheorem[style = thmbox, name = Theorem, numbered = no]{theorem*}
+\declaretheorem[style = thmbox, name = Lemma, numbered = no]{lemma*}
+\declaretheorem[style = thmbox, name = Proposition, numbered = no]{proposition*}
+\declaretheorem[style = thmbox, name = Corollary, numbered = no]{corollary*}
+\declaretheorem[style = thmbox, name = Conjecture, numbered = no]{conjecture*}
+
+\declaretheorem[style = defbox, name = Definition, sibling = theorem]{definition}
+\declaretheorem[style = defbox, name = Definition, numbered = no]{definition*}
+
+\declaretheorem[style = exbox, name = Example, sibling = theorem]{example}
+\declaretheorem[style = exbox, name = Example, numbered = no]{example*}
+
+\declaretheorem[style = notebox, name = Fact, sibling = theorem]{fact}
+\declaretheorem[style = notebox, name = Fact, numbered = no]{fact*}
+\declaretheorem[style = notebox, name = Note, sibling = theorem]{note}
+\declaretheorem[style = notebox, name = Note, numbered = no]{note*}
+\declaretheorem[style = notebox, name = Problem, sibling = theorem]{problem}
+\declaretheorem[style = notebox, name = Problem, numbered = no]{problem*}
+
+\declaretheorem[style = plain, name = Question, sibling = theorem]{question}
+\declaretheorem[style = plain, name = Question, numbered = no]{question*}
+
+\declaretheorem[style = plain, name = Claim, sibling = theorem]{claim}
+\declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
+
+% Makes title bold (thanks Jeffery Yu)
+\makeatletter
+\patchcmd{\@maketitle}{\LARGE}{\LARGE\bfseries}{}{}
+\makeatother

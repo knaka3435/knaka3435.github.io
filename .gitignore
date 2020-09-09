@@ -1,4 +1,13 @@
 *jekyll.md
 *jekyll.html
 *.ignore
+#Jupyter notebook
 .ipynb_checkpoints
+#Latex files
+*.log
+*.out
+*.toc
+*.gz
+*.aux
+*.fls
+*.fdb_latexmk

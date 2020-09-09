@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Summer 2020 Q# Competition | My blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Summer 2020 Q# Competition" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="About Q#" />
+<meta property="og:description" content="About Q#" />
+<link rel="canonical" href="http://localhost:4000/programming/2020/08/07/Summer-2020-Q.html" />
+<meta property="og:url" content="http://localhost:4000/programming/2020/08/07/Summer-2020-Q.html" />
+<meta property="og:site_name" content="My blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-07T23:09:57-05:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/programming/2020/08/07/Summer-2020-Q.html"},"headline":"Summer 2020 Q# Competition","dateModified":"2020-08-07T23:09:57-05:00","datePublished":"2020-08-07T23:09:57-05:00","description":"About Q#","url":"http://localhost:4000/programming/2020/08/07/Summer-2020-Q.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=9d2374a3e3d7c901a4574dd449aca39a449590e4">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Summer 2020 Q# Competition</h1>
+      <h2 class="project-tagline">I do math and some Lean.</h2>
+      
+        <a href="https://github.com/mushokunosora/mushokunosora.github.io" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Summer 2020 Q# Competition</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2020-08-07T23:09:57-05:00" itemprop="datePublished">
+        Aug 7, 2020
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="about-q">About Q#</h2>
+
+<p>Q# is a strongly typed language that is based off of F# (and C#) that is designed for quantum computing. It is an open source project, which is primarily being developed by Microsoft Research. Fortunately for the many of us who do not have access to a quantum computer, it is able to simulate a quantum computer on classical ones. Some particular points of interest are the libraries that are dedicated to quantum chemistry, as well as quantum machine learning.</p>
+
+<p>So far, the language seems to be rather rough around the edges with a handful of “features” that have yet to be resolved, but this might change in the future (although there seems to be a trend of significant overhauls). I think that it will be interesting to see how it will be like in the future, especially how well it is able to see how to reverse-engineer classical programs to recover initial states of mutable objects. (In particular, starting off with a list that’s instantiated as <code class="language-plaintext highlighter-rouge">[True, True, True, True]</code> and change it to <code class="language-plaintext highlighter-rouge">[True, False, True, False]</code> using some deterministic <code class="language-plaintext highlighter-rouge">for</code> loop.)</p>
+
+<h2 id="thoughts">Thoughts</h2>
+
+<p>Setting things up was a bit of a pain.</p>
+
+<p>The default <code class="language-plaintext highlighter-rouge">dotnet</code> set-up ended up being ridiculously slow, taking over 10 seconds just to print <code class="language-plaintext highlighter-rouge">hello world!</code> in a bare-bones <code class="language-plaintext highlighter-rouge">.qs</code> file. I struggled for awhile with this, trying to get it to work “normally” and with python, but I ended up using a jupyter notebook with the Q# kernel loaded, which ended up working great. Interestingly enough, this had provided a huge performance boost, and now the same <code class="language-plaintext highlighter-rouge">hello world</code> program was about as fast as python (although dumping some 1024 states that needed to be rendered took a fair amount of time). This allowed actual quantum computing (simulations) to be feasible.</p>
+
+<p>After setting up my environment, there was quite a bit of preperation needed before the competition, as I knew basically nothing about anything quantum, so I tried to learn all I could in 2 or so weeks. I found that some <a href="https://homepages.cwi.nl/~rdewolf/qcnotes.pdf">quantum computing notes</a> had been quite an interesting read, although I wasn’t able to get very far into it, and at times it seemed a bit too lassiez-faire on the circuit building side.</p>
+
+<p>The <a href="https://github.com/microsoft/QuantumKatas">Quantum Katas</a> ended up being a great help in general for learning more about Q#, as well as providing some idea of how to use notebooks to run Q# programs. But more importantly, it gave a better sense of how to hand-make quantum circuits as well as just nailing down some quantum computing concepts. Some of the more interesting puzzles were creating quantum oracles for Deutsch-Jozsa-like problems as well as creating some fancier superposition states (two arbitrary bit strings). Additionally, since swapping out different circuits and going through the final end state was rather bothersome, I found that <a href="https://algassert.com/quirk">quirk</a> had made it easier to visualize it before I actually tried to program it.</p>
+
+<p>Aside from the fact that Q# was a strongly typed language and dealing with some of the more familiar things like lists was rather unintuitive to me, Q# wasn’t too bad. Well, until I tried to set up the quantum machine learning (QML) library. And… wow. I ended up with a hacky combination of some tutorials that had allowed me to somehow build a circuit model. It ended up having python as the host, reloading the workspace every time I wanted to train it, digging through all of the <code class="language-plaintext highlighter-rouge">.qs</code> files for the right namespace, and finally running the simulation. After 20-30 minutes or so, it would print out a few floats… and say <code class="language-plaintext highlighter-rouge">86 misses</code>, ouch. After playing around with the starting parameters more (and the pre-processing settings), I was able to train the classifier well enough for some problems. Something amusing that I came across was that as of now, there is little evidence that quantum classifiers are going to provide any advantage over classical ones, owing in part due to the relatively large number of (controlled) unitary gates needed to cover all of the bases, and the larger number of qubits needed to store data.</p>
+
+<p>At some point, it might be nice to have a better idea of machine learning than some ad-hoc solution, and trying to feed it model circuits and starting parameters more smartly, as opposed to just trying to get it to converge.</p>
+
+<p>Overall, I thought that the contest had quite a few interesting problems, and it was quite the experience to work with something like Q# when all of my preivous experience had been with python (which is as loosely typed as they get), and C++ (whose syntax felt much more dated), both of which are a far cry from the functional programming-esque Q#. Additionally, it was fun to learn something that I’ve never seen before, and in doing so, learning some more math. Also, placing 118th wasn’t that bad either.</p>
+
+<h2 id="some-problems-and-solutions">Some problems and solutions</h2>
+
+<p><a href="https://codeforces.com/contest/1357/problem/A5">A5</a> Essentially, <a href="https://codeforces.com/contest/1357/submission/84532032">my solution</a> was just to approximate \(\pi\) using some integer multiple of an angle, \(\theta\). The reasoning for \(\pi\) being chosen is because it allows you to certainly distinguish \(Rz(\theta)\) from \(Ry(\theta)\). The main difficulty was to try to get it to be simultaneously close enough to \(\pi\) while also being fast enough to not time out. This ended up being implemented as using <code class="language-plaintext highlighter-rouge">besterror &lt; .10</code> as the condition to shortcut the solution and only run the approximation once. The other case in which the approxmation was run once is whenever the multiple is at least <code class="language-plaintext highlighter-rouge">400</code>, for obvious reasons. Otherwise, we run it multiple times, and use the most common answer in order to determine which gate it is more likely to be.</p>
+
+<p><a href="https://codeforces.com/contest/1357/problem/A7">A7</a> This one was a lot more difficult in that quite a few gates only differend in sign, which means that you have to use entanglement to squeeze out some more information. <a href="https://codeforces.com/contest/1357/submission/84546404">My solution</a> was quite convoluted, but the main idea is that after shifting things a bit, the matrices become \(I, iI, -I, -iI\), from which you still need to distinguish the phase. After playing around on quirk a bit more, I was able to tell if it was imaginary, and from that, if it was imaginary, make it real, and then determine if it was positive or negative.</p>
+
+<p><a href="https://codeforces.com/contest/1357/problem/B1">B1</a> The main idea of <a href="https://codeforces.com/contest/1357/submission/84575900">my (time limit exceeding) solution</a> is to implement a 3-qubit adder (since \(\frac{10}{2} &lt; 2^3\)) that increments whenever it hits a \(1\), and then do a controlled NOT with control bits whose value is \(\frac{N}{2}\) on the ancilla, and then uncompute. Sadly, my solution was not fast enough, nor was using python-generated Q# code that brute forced all of the cases.</p>
+
+<p><a href="https://codeforces.com/contest/1357/problem/C2">C2</a> <a href="https://codeforces.com/contest/1357/submission/84369810">This solution</a> employs a similar trick to C1, we add another qubit, <code class="language-plaintext highlighter-rouge">q</code>, and depending on the post-select, we either dump everything and try again, or we’ve generated the right state. More specifically, we generate an equal superposition of the <code class="language-plaintext highlighter-rouge">qs</code> register, and then we entangle <code class="language-plaintext highlighter-rouge">q</code> with our register, and after measuring and discarding <code class="language-plaintext highlighter-rouge">q</code>, we end up with either an odd number of <code class="language-plaintext highlighter-rouge">1</code>s left, or an even number of <code class="language-plaintext highlighter-rouge">1</code>s left in the register.</p>
+
+<h2 id="notes">Notes</h2>
+
+<p>There seems to have been some rather significant changes to Q# since summer, and it’s fairly likely that the code doesn’t work with modern versions without changing quite a bit. Additionally, even during the contest window, the QML library didn’t work, and a legacy version was needed to run it.</p>
+
+  </div><a class="u-url" href="/programming/2020/08/07/Summer-2020-Q.html" hidden></a>
+</article>
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/mushokunosora/mushokunosora.github.io">mushokunosora.github.io</a> is maintained by <a href="https://github.com/mushokunosora">mushokunosora</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

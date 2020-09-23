@@ -6,9 +6,6 @@
 \author{Kenji Nakagawa}
 \date{August 2020}
 
-\usepackage{enumitem}
-
-
 \begin{document}
 
 \maketitle
@@ -76,7 +73,7 @@ Suppose $\rho$ is not irreducible, and has $W$ as a proper $G$-invariant subspac
 
 In the case of characteristic $p>0$ fields, we must be more careful, as the notion of an inner product isn't nearly as strong, and so instead, we use projections, which still captures all of the essential information.
 
-Suppose that we have that $P$ is a projection from $V$ onto our proper $G$-invariant subspace, $W$, then for all $g \in G$, we have that $\rho(g)P\rho(g^{-1}$ is another projection onto $W$, as this is just a change of basis. Using the same averaging trick, we want to look at $$P' = \frac{1}{|G|} \sum_{g \in G} \rho(g)P\rho(g^{-1}).$$ (Note: this is where the characteristic condition plays in) From similar reasoning to before, we have that $P'$ is a projection onto $W$. Additionally, we have that for any $g$, $\rho(g)P'=P'\rho(g)$ from the following:
+Suppose that we have that $P$ is a projection from $V$ onto our proper $G$-invariant subspace, $W$, then for all $g \in G$, we have that $\rho(g)P\rho(g^{-1})$ is another projection onto $W$, as this is just a change of basis. Using the same averaging trick, we want to look at $$P' = \frac{1}{|G|} \sum_{g \in G} \rho(g)P\rho(g^{-1}).$$ (Note: this is where the characteristic condition plays in) From similar reasoning to before, we have that $P'$ is a projection onto $W$. Additionally, we have that for any $g$, $\rho(g)P'=P'\rho(g)$ from the following:
 $$ \sum_{h \in G} \rho(gh)P\rho(h^{-1}) = \sum_{h' \in G} \rho(h')P\rho(h'^{-1}g),$$ where $h' = gh$. All that's left is to prove that the kernel of $P'$ is also $G$-invariant, or rather that if $v \in \ker P'$, then $\rho(g)v \in \ker P'$ as well, but $P'\rho(g)v = \rho(g)P'v=0$, and so, we are done.
 
 \end{proof}
@@ -174,7 +171,7 @@ We can also consider $P$ as a linear operator on $\Hom(V,W)$, and we want to com
 
 \begin{lemma}
 
-If $\rho, \ \phi$ are representations to $U_n(\CC)$ and $U_m(\CC),$ respectively, then $P(E_{ki})_{\ell j} = \langle \phi_{k\ell}, \rho_{ij}$.
+If $\rho, \ \phi$ are representations to $U_n(\CC)$ and $U_m(\CC),$ respectively, then $P(E_{ki})_{\ell j} = \langle \phi_{k\ell}, \rho_{ij} \rangle$.
 
 \end{lemma}
 \begin{proof}
@@ -187,8 +184,12 @@ This is a routine calculation,
 \end{proof}
 
 \begin{note}
-Currently, this is horribly unintuitive. We can think of $P$ having a matrix that's a 
+Currently, this is horribly unintuitive. We can think of $P$ as being a $m \times m$ block matrix whose blocks are themselves $n \times n$ matrices.
 \end{note}
+
+
+
+
 
 \subsection{Fourier Analysis on Finite Groups}
 

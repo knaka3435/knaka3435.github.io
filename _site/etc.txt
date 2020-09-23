@@ -1,0 +1,16 @@
+Miscellaneous stuff
+
+Lean:
+1. 3846
+2. 4000
+3. ??? - coming soon
+
+VSCode
+1. LaTeX Workshop by James Yu
+
+TODO:
+1. Make about page
+2. Edit _layouts to look nicer and provide more layouts for cayman
+3. Edit cayman theme to look even better
+4. Create navigation sidebar
+5. Get pygments to work with lean

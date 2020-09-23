@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lindrew}[formal]
+\usepackage{import}
+\title{Read Math}
+\author{Kenji Nakagawa}
+\date{July 2019}
+
+\usepackage{enumitem}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+Notes are based on the second edition of Number Fields by Daniel A. Marcus, and at times may reference Neukirch. These are not meant to be comprehensive, but rather serve as a summary.
+
+
+\section{Fermat's Conjecture}
+Fermat's last theorem has proved to be elusive, and to have inspired a great deal of algebraic number theory. It states that there does not exist nontrivial solutions to \(x^n+y^n=z^n \) whenever \(n > 2\). Kummer saw that the left hand side factored into \(\prod\limits_{i=1}^p (x+\zeta_p^iy)\), and naturally, wanted to show that \(\ZZ[\zeta_p] \) had a unique factorization, and thus, that the case in which \( p\) does not divide \(x,y\), or \(z\). However, this is only true for regular primes.
+\begin{definition}
+A prime is \textit{regular} if \(p \nmid h \), where \(h\) denotes the class number of the ring \(\ZZ[\zeta]\), which is the number of equivalence classes of the ideals, with equivalence between ideals \(A,B\) being defined \(A \sim B\) iff \(aA=bB, \ a \in A, b \in B\).
+\end{definition}
+
+It can be shown that if \(p \nmid x,y,z\) (referred to as Case \(1\) in this context, and Case \(2\) when \(p\) divides one of \(x,y,z\)), then there are no solutions given that \(\ZZ[\zeta]\) is a unique factorization domain which implies that \(x+y\zeta \) has the form \(u\alpha^p\) for some \( \alpha \in \ZZ[\zeta]\)
+%\import{}{C1.tex}
+
+\section{Number Fields and Number Rings}
+\begin{definition}
+A \textit{number field} is a subfield of \(\CC\) having finite degree (dimension as a vector space) over \(\QQ\). We refer to \(Q[\zeta]\), \(Q[\sqrt{m}]\) as cyclotomic fields, and quadratic fields, with the latter having a subdistinction of real versus imaginary.
+\end{definition}
+As a result of the following equivalences:
+\begin{enumerate}
+    \item \(\alpha\) is an algebraic integer
+    \item The additive group is finitely generated
+    \item \(\alpha\) is a member of some subring of \(\CC\) having a finitely generated additive group
+    \item \(\alpha A \subset A \) for some finitely generated additive subgroup \(A \subset \CC\)
+\end{enumerate}
+we can show that the sum and product of two algebraic numbers is yet another algebraic number. As a more general result, the ring of algebraic integers, notated as \(\mathbb{A} \) in this text or, more commonly, as \(\mathcal{O}\). Furthermore, we may denote the algebraic numbers over some ring as \(\mathbb{A} \cup K\) or as \(\mathcal{O}_K\).
+
+Something that is rather intuitive, but is of note is that \(\gal{\QQ[\zeta_m]}{\QQ} \simeq \left(\ZZ/m\ZZ\right)^{\times}\). This implies that the Galois group is transitive, and furthermore, that the subfields correspond to the subgroups, as well as that when \(m=p\), a prime, that it contains a unique subfield of each degree dividing \(p-1\), and that there it contains a unique quadratic field, which are \(\sqrt{\pm p}\) depending on \(p\).
+
+Sometimes it's useful to replace embeddings of a number field with automorphisms. One way to do his is to extend the number field to a normal extension of \(\ZZ\), which is always possible. As a reminder, a normal extension is an extension that any irreducible polynomial in the original field is either still irreducible, or it factors completely into linear terms. As an example, \(L=\QQ[\sqrt[3]{2},\zeta_3]\) is a normal extension of \(\QQ[\sqrt[3]{2}]\).
+
+\begin{definition}
+We define the trace and the norm as \( T(\alpha) = \sum_{i}^n \sigma_i(\alpha) \) and \(N(\alpha) = \prod_{i}^n \sigma_i(\alpha)\), where \(\sigma_i(\alpha)\) is the image of \(\alpha\) in the \(i\)th embedding. 
+\end{definition}
+It is easy to show that both are always rational based on the minimal polynomial, and to show that the norm of an algebraic integer is an integer.
+
+Some applications of this is that in general (except for two cases), that the imaginary integer fields have the property that a number is a unit iff it has norm \(\pm1\).
+
+\begin{definition}
+The relative trace and relative norm is essentially the same, \(T^L_K, N^L_K\) are the embeddings of \(L\) in \(\CC\) which keep \(K\) fixed.
+\end{definition}
+Similarly to field extensions, the relative trace, and relative norm are also transitive.
+
+Additionally, we define the discriminant of an \(n\)-tuple as \(\disc(\alpha_1, \dots, \alpha_n = |\sigma_i(\alpha_j)|^2\), where \(\sigma_i\) are the embeddings of the field that \(\alpha_i\) are in, where \(|a_{ij}|\) represents the determinant of the matrix \([a_{ij}]\), which has \(a_{ij}\) in the standard position. By some linear algebra stuff, we can define \(\disc(\alpha_1, \dots \alpha_n)=|T(\alpha_i\alpha_j)|\). 
+This has some nice properties which include that if the argument are all algebraic integers, then it is an integer, and if the determinant is nonzero, then the arguments are linearly independent over the rationals.
+
+%\import{}{C2.tex}
+\section{Prime Decomposition in Number Rings}
+\begin{definition}
+A \textit{Dedekind domain} is an integral domain \(R\) such that
+\begin{enumerate}[label=(\alph*)]
+    \item \(R\) is Noetherian. This is equivalent to every ideal being finitely generated, every increasing sequence of ideals is eventually constant, or every non-empty set \(S\) of ideals has a maximal member (\(\exists M \in S\) such that \(M \subset I \in S \implies M=I\).
+    \item Every nonzero prime ideal is a maximal ideal;
+    \item \(R\) is integrally closed in its field of fractions \(K = \{ \alpha/\beta : \alpha, \beta \in R, \beta \neq 0 \}\).
+\end{enumerate}
+\end{definition}
+\begin{theorem}
+Every number ring is a Dedekind domain
+\end{theorem}
+\begin{proof}
+Every number ring, \(R\), as well as its ideals, with number field \(K\) is a free abelian group of finite rank, implying the first condition. For the second condition, we need only prove that \(R/I\) is finite (in the case of \(I\) prime, this gives a finite field, implying maximality). Let \(\alpha \in I\), then \(N(\alpha) \in \ZZ, \ m=\alpha\beta \implies \beta = \frac{m}{\alpha} \in K\). Furthermore, it can be shown that \(\beta \in \AA\). Since \(R/(m)\) is finite, so is \(R/I\). Finally observe that if \(\alpha/\beta\) is a root of a monic polynomial over \(R\), then it is an algebraic integer. Thus \(\alpha/\beta \in K \cap \AA = R\). \( a \ast b\) 
+
+\end{proof}
+%\import{}{C3.tex}
+\end{document}

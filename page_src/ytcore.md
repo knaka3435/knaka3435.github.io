@@ -24,19 +24,19 @@ All of the code is available as a jupyter notebook [here](https://github.com/mus
 ## Some graphs
 Pictured below are the number of $$p$$-cores of size $$n$$, first for $$p=2,3,4$$ (so it's not dwarfed by the larger $$p$$) and then for $$ 2 \le p \le 8$$ and $$p = 11$$, and $$1 \le n \le 50$$. There are a number of conjectures realted to this number (oftentimes denoted as $$c_p(n)$$), and is referred to as Stanton's conjecture Surprisingly, the $$p-$$cores of size $$n$$ are exceedingly rare, as it does not seem like a big restriction that the $$p-$$core cannot have any hook lengths divisible by $$p$$. However, the fact that as $$p$$ increases, so too does $$c_p(n)$$ is rather unsurprising, as it would seem that it gives you a larger degree of freedom to build your $$p$$-cores.
 
-![p=2,3,4](/assets/smallcore.png) ![All values of p](/assets/largecore.png)
+![p=2,3,4](/assets/yt/smallcore.png) ![All values of p](/assets/yt/largecore.png)
 
 
 To round it off, a large number of animated gifs of the frequency of the different sizes of $$p-$$quotients is provided. At time $$1 \le n \le 50$$, the distribution of the total size of the $$p$$-quotients of all partitions of $$n$$ is displayed, with the leftmost point corresponding to an empty $$p$$-quotient (and full $$p$$-core) and the rightmost with a $$p$$-quotient that is as full as possible.
 
-![p=2](/assets/p2distr.gif)
-![p=3](/assets/p3distr.gif)
-![p=4](/assets/p4distr.gif)
-![p=5](/assets/p5distr.gif)
-![p=6](/assets/p6distr.gif)
-![p=7](/assets/p7distr.gif)
-![p=8](/assets/p8distr.gif)
-![p=11](/assets/p11distr.gif)
+![p=2](/assets/yt/p2distr.gif)
+![p=3](/assets/yt/p3distr.gif)
+![p=4](/assets/yt/p4distr.gif)
+![p=5](/assets/yt/p5distr.gif)
+![p=6](/assets/yt/p6distr.gif)
+![p=7](/assets/yt/p7distr.gif)
+![p=8](/assets/yt/p8distr.gif)
+![p=11](/assets/yt/p11distr.gif)
 
 As an added bonus, there's also the following for $$p=11$$ and going up to $$n=74$$ (since it had taken over 9 hours to get that far)
 ![p=11](/assets/p11extdistr.gif)

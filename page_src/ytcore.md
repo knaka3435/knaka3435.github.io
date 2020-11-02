@@ -5,23 +5,28 @@ permalink: /ytcore/index
 ---
 
 # Background
-## An Example
-Suppose that we start with a partition and we want to know if we can successively remove dominoes from the outside while having it remain a valid partition at every step of the way. 
+## Young Tableaux, Step sequences
+We have that $$\lambda = (\lambda_1,\lambda_2,\ldots,\lambda_k)$$ is a partition of $$n$$ if $$\lambda_1 \ge \lambda_2 \ge \ldots \ge \lambda_k$$ and $$\sum_{i=1}^k \lambda_i = n$$, and write it as $$\lambda \vdash n$$. We identity partitions with a Young Tableaux, which is a north-west aligned bunch of cells such that the $$i$$th row contains $$\lambda_i$$ cells.
 
+Also associated with a partition is a *step sequence*, in which we push the Young Tableaux into a corner of a wall, and we outline the exposed edge (including the wall) with the (perhaps not standard) notion that a vertical edge is a $$1$$ and a horizontal step is a $$0$$. For example, we have that the partition $$(1,1)$$ has step sequence $$(\overline{1}, 0,1,1,\overline{0})$$, where $$\overline{1}$$ and $$\overline{0}$$ represent an infinite sequence of $$1$$s and $$0$$s respectively. As another example, we have that $$(4,3,1,1)$$ has step sequence $$(\overline{1},0,1,1,0,0,1,0,1,\overline{0})$$. For convenience, we typically omit the $$\overline{1}$$ and the $$\overline{0}$$'s and identify sequences with leading $$1$$'s with the same without, and similarly for trailing $$0$$'s, so $$(1,1,0,0,1,0,0)=(1,1,1,1,0,0,1)=(0,0,1)$$.
 
-## The p-core
-The $$p$$-core is harder to compute, although with 
+Although longer, the step sequence often offers an efficient way of computing various things, and as such, is the backbone of quite a bit of the code.
 
-## The p-quotient
+### The p-core
+The $$p$$-core is harder to compute, although with the step sequence, it becomes more manageable. A property of the step sequence is that if the $$i$$th element is a $$0$$, and the $$i+j$$the element is a $$1$$, then these positions correspond to a hook of length $$j$$. Now, if you swap the $$i$$th element with the $$i+j$$th, you removing that hook. So, basically what we want to do is to push all the $$1$$'s in the step sequence as far left as we can by iteratively moving them back $$p$$ positions. If we wanted to take the $$3$$-core of $$(0,1,0,1,1,0,0,0,1)$$, we can move the last $$1$$ to become $$(0,1,0,1,1,1)$$, and then the second to get $$(1,1,0,0,1,1)$$, and finally, we can move the last $$1$$ again to get $$(1,1,1,0,1) = (0,1)$$.
 
-In practice, the $$p$$-quotient is easiest to construct by first converting the partition into its corresponding step sequence, and from that, separating the sequence based off of the index modulo $$p$$. For example, if we have the partition $$(5,4,3,3,2,1)$$, we have that the corresponding step sequence is $(\overline{1}, 0,1,0,1,0,1,1,0,1,0,1,\overline{0})$, and if we wanted to take the $$3$$-quotient, we would separate out the sequence into $(0,1,1,0) = (0,1,1)$, $(1,0,0,1) = (0,0,1)$ and $(0,1,1)$.
+Algorithmically, one can accomplish this in linear time by starting with the first $$0$$ you find and looking from the back of the list (decreasing index by $$p$$) and towards the front while remembering where you last looked.
+
+### The p-quotient
+
+In practice, the $$p$$-quotient is easiest to construct by first converting the partition into its corresponding step sequence, and from that, separating the sequence based off of the index modulo $$p$$. For example, if we have the partition $$(5,4,3,3,2,1)$$, we have that the corresponding step sequence is $$(0,1,0,1,0,1,1,0,1,0,1)$$, and if we wanted to take the $$3$$-quotient, we would separate out the sequence into $(0,1,1,0) = (0,1,1)$, $(1,0,0,1) = (0,0,1)$ and $(0,1,1)$.
 
 
 # Code
-All of the code is available as a jupyter notebook [here](https://github.com/mushokunosora/youngtableaux). Most of it is fairly self-explanatory and it also contains a fair bit of documentation.
+All of the code is available as a jupyter notebook [here](https://github.com/mushokunosora/mushokunosora.github.io/blob/master/YT.ipynb). Most of it is fairly self-explanatory and it also contains a fair bit of documentation, as well as examples.
 
 
-## Some graphs
+### Some graphs
 Pictured below are the number of $$p$$-cores of size $$n$$, first for $$p=2,3,4$$ (so it's not dwarfed by the larger $$p$$) and then for $$ 2 \le p \le 8$$ and $$p = 11$$, and $$1 \le n \le 50$$. There are a number of conjectures realted to this number (oftentimes denoted as $$c_p(n)$$), and is referred to as Stanton's conjecture Surprisingly, the $$p-$$cores of size $$n$$ are exceedingly rare, as it does not seem like a big restriction that the $$p-$$core cannot have any hook lengths divisible by $$p$$. However, the fact that as $$p$$ increases, so too does $$c_p(n)$$ is rather unsurprising, as it would seem that it gives you a larger degree of freedom to build your $$p$$-cores.
 
 ![p=2,3,4](/assets/yt/smallcore.png) ![All values of p](/assets/yt/largecore.png)
@@ -39,7 +44,7 @@ To round it off, a large number of animated gifs of the frequency of the differe
 ![p=11](/assets/yt/p11distr.gif)
 
 As an added bonus, there's also the following for $$p=11$$ and going up to $$n=74$$ (since it had taken over 9 hours to get that far)
-![p=11](/assets/p11extdistr.gif)
+![p=11](/assets/yt/p11extdistr.gif)
 ## Some patterns
 ### $$p=2$$
 The distribution looks a bit odd, however most of it can be explained readily.

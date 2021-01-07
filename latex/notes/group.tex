@@ -1,0 +1,86 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lindrew}[formal]
+\usepackage{import}
+\title{Group Theory}
+\author{Kenji Nakagawa}
+%\date{September 2020}
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\section*{Introduction}
+This is just a list of important results in elementary group theory. By no means comprehensive, and many theorems lack proof sketches. As an added note, if the proof is trivial, then it's omitted, but in the case that it takes significant effort (or I simply forgot), it's prefaced by an asterisk.
+
+\section{Theorems}
+
+\begin{proposition}
+If $N$ and $M$ are normal subgroups of $G$, then $NM$ is also normal in $G$.
+\end{proposition}
+\begin{corollary}
+If $M$ is a normal subgroup of $G/N$, then $M$ extends to the normal subgroup $NM$ of $G$.
+\end{corollary}
+
+\begin{theorem}
+(*) For odd primes $p$, $\left( \ZZ/p^k\ZZ \right)^\times \cong \ZZ_{p^k-p^{k-1}}$ and $\left(\ZZ/2^k\ZZ\right)^\times \cong \ZZ_2 \oplus \ZZ_{2^{k-2}}$.
+\end{theorem}
+
+\begin{proposition}
+$[G:C(a)] = |\cl(a)|$.
+\end{proposition}
+
+\begin{theorem}
+(*) (Class equation) Let $g_i$ denote representatives of conjugacy classes outside of the center. Then, $|G| = |Z(G)|+ \sum [G:C(g_i)].$
+\end{theorem}
+
+\begin{corollary}
+Any $p$-group has nontrivial center.
+\end{corollary}
+\begin{proof}
+    From the class equation, we have that $|G|$ and each of the $[G:C(g_i)]$ is a multiple of $p$, and since $e \in Z(G)$, we have that $|Z(G)|$ is a nontrivial multiple of $p$.
+\end{proof}
+
+\begin{theorem}
+(*) (N/C Theorem) For any subgroup $H$, $N(H)/C(H)$ is isomorphic to some subgroup of $\Aut H$.
+\end{theorem}
+
+\begin{theorem}
+(*) The Sylow theorems state that if $|G|=p^k \cdot m$ where $p \nmid m$, there exists a Sylow $p-$subgroup of $G$ of order $p^n$. The number of such subgroups, $n_p$ satisfies $n_p \cong 1 \mod p$ and $n_p = |G : N(H)| \mid |G|$ where $H$ is any $p-$subgroup.
+\end{theorem}
+\begin{corollary}
+If $n_p = 1$, then the unique Sylow $p-$ subgroup is in fact normal.
+\end{corollary}
+
+\begin{theorem}
+(*) If $G/Z(G) \cong \ZZ_n$, then $G$ is in fact abelian.
+\end{theorem}
+
+\begin{theorem}
+(*) There does not exist any simple group whose order is twice an odd number.
+\end{theorem}
+
+\begin{theorem}
+(*) (Embedding Theorem) If $H$ is a subgroup of $G$, then the cosets of $H$ induce a group action $\phi : G \to S_{[G:H]}$. If $G$ is simple, then $|G|$ divides $|A_{[G:H]}| = \frac{[G:H]!}{2}$.
+\end{theorem}
+
+\begin{theorem}
+(*) (Index Theorem) Let $H$ be any subgroup of the simple group $G$. Then, $|G|$ divides $[G:H]!$    
+\end{theorem}
+
+\begin{corollary}
+If $G$ is simple, then $|G|$ divides $n_p!$.
+\end{corollary}
+\begin{proof}
+    Let $H$ be any Sylow $p-$subgroup, then apply the index theorem to $N(H)$.
+\end{proof}
+
+
+\begin{proposition}
+    Let $p$ be the smallest prime dividing $|G|$, then if there exists a subgroup $H$ of index $p$, then $G$ is not simple.
+\end{proposition}
+\begin{proof}
+    
+\end{proof}
+\end{document}

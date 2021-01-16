@@ -1,0 +1,37 @@
+###################################
+#         Installing lean         #
+###################################
+#run the script on the lean website
+#to avoid errors, make sure to have to edit your ~/.bashrc with the following lines
+#export PATH="$HOME/.elan/bin:$PATH"
+#then leanproject should work fine
+leanproject get laughinggas/DVR
+leanproject get lftcm2020
+leanproject get apurvnakade/mc2020-projects
+leanproject get AlexandruBosinta/NumberFields
+leanproject get tutorials
+leanproject get TwoFx/sudoku
+
+
+
+
+
+###################################
+#         Painless Things         #
+###################################
+# VSCode I don't remember, use application store
+# Jupyter
+
+
+###################################
+#          Jekyll Website         #
+###################################
+#This was actually ridiculously painful
+#Make sure that ruby is decently new (>2.5)
+#Install bundler
+#Default tutorial is good enough
+#to create a new website use `bundle exec jekyll new`
+#don't mess around with the gems too much!
+#To add MathJax, you have to insert a js to a _layouts/default.html
+git clone https://github.com/mushokunosora/mushokunosora.github.io
+

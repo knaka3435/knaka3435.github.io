@@ -48,11 +48,11 @@ An \vocab{algebra} (over a field) is a vector space that has a bilinear product.
 A \vocab{representation} of a group is a homomorphism $\phi : G \to GL(V)$ for some vector space $V$. A representation is \vocab{irreducible} if the only $G$-invariant subspaces are trivial.
 \end{definition}
 
-Some easy examples of representations is $\rho \ : \ G \to \QQ$, where $g \mapsto 1$ for all $g \in G$, and the operation is multiplication. This is referred to as the trivial representation, and is irreducible, as it has degree $1$, and there are no nontrivial subspaces.
+Some easy examples of representations is $\rho : G \to \QQ$, where $g \mapsto 1$ for all $g \in G$, and the operation is multiplication. This is referred to as the trivial representation, and is irreducible, as it has degree $1$, and there are no nontrivial subspaces.
 
 A particularly important representation that comes up a lot is called the (left) \vocab{regular} representation, which has standard basis $e_{g_i}$, and has $\rho_{reg}(g) e_{g_i} = e_{gg_i}$. This has the notable feature that all  $\rho_{reg} (g)$ are permutation matrices, and arise naturally from thinking about the group action of $G$ on itself (or equivalently, Cayley's theorem). Interestingly enough, over $\CC$, this also contains every other irreducible representation, with multiplicity equal to their degree.
 
-We also have a few notions that are in a similar vein: A representation is $\vocab{completely reducible}$ if it factorizes into the direct sum of several irreducible representations (and with the proper basis, this corresponds to a block diagonal matrix), and we say that a representation is $\vocab{decomposable}$ if we can break it down into two smaller representations.
+We also have a few notions that are in a similar vein: A representation is \vocab{completely reducible} if it factorizes into the direct sum of several irreducible representations (and with the proper basis, this corresponds to a block diagonal matrix), and we say that a representation is \vocab{decomposable} if we can break it down into two smaller representations.
 
 Another common one is that of equivalence, which is two representations of $G$, $\rho, \phi$  are considered equivalent, denoted, $\rho \sim \phi$ if there exists some isomorphism, $T$, from their corresponding vector spaces such that $T\rho=\phi T$. Unsurprisingly, if something that is true about $\rho$, such as reducibility, is also true about $\phi$. These proofs mainly consist of definitions and the fact that $T$ is an isomorphism, and aren't too interesting so far.
 
@@ -80,13 +80,13 @@ $$ \sum_{h \in G} \rho(gh)P\rho(h^{-1}) = \sum_{h' \in G} \rho(h')P\rho(h'^{-1}g
 
 These conditions are sharp.
 \begin{example}
-The infinite group $\ZZ$ under addition has the representation $$\rho \ : \ \ZZ \to \GL_2\left(\RR\right) \quad \textrm{defined by} \quad \rho(n) = \begin{pmatrix} 1 & n \\ 0 & 1 \end{pmatrix}.$$
+The infinite group $\ZZ$ under addition has the representation $$\rho : \ZZ \to \GL_2\left(\RR\right) \quad \textrm{defined by} \quad \rho(n) = \begin{pmatrix} 1 & n \\ 0 & 1 \end{pmatrix}.$$
 \end{example}
 
 This is easily verified to be a homomorphism, as they are all powers of $\rho(1)$. Now, we have that $\begin{pmatrix} 1  \\ 0 \end{pmatrix}$ is an eigenvector of each of the $\rho(n)$, and so, it is $G$-invariant, however, there is no other common eigenvector, and so it is not possible to split up $\rho$ into two degree one irreducible representations.
 
 \begin{example}
-The finite group $\ZZ/p\ZZ$ under addition, where $\rho  \ : \ \ZZ/p\ZZ \to \GL_2(\FF_p)$ and $\rho(n) = \begin{pmatrix} 1 & n \\ 0 & 1 \end{pmatrix}$ isn't irreducible and cannot be decomposed.
+The finite group $\ZZ/p\ZZ$ under addition, where $\rho  : \ZZ/p\ZZ \to \GL_2(\FF_p)$ and $\rho(n) = \begin{pmatrix} 1 & n \\ 0 & 1 \end{pmatrix}$ isn't irreducible and cannot be decomposed.
 \end{example}
 
 Essentially, in both cases, the obstruction was that these are the powers of Jordan blocks, which lacks the needed number of eigenvalues to be the direct sum of degree one irreducible representations, but has a fixed subspace.
@@ -108,10 +108,10 @@ A rather interesting result is that you can discard a large amount of the inform
 But first, we need to look at representations a bit more closely.
 
 \begin{definition}
-Suppose that $\rho \ : \ G \to \GL(V)$ and $\phi \ : \ G \to \GL(W)$ (here $W$ is not necessarily some subspace). An \vocab{intertwining transformation} is a linear transformation $T \ : \ V \to W$ such that for all $g \in G$, $T\phi(g) = \rho(g)T$. In some other sources, this is also referred to as a homomorphism (of representations), and is denoted as $\Hom_G(\rho, \phi)$.
+Suppose that $\rho : G \to \GL(V)$ and $\phi : G \to \GL(W)$ (here $W$ is not necessarily some subspace). An \vocab{intertwining transformation} is a linear transformation $T : V \to W$ such that for all $g \in G$, $T\phi(g) = \rho(g)T$. In some other sources, this is also referred to as a homomorphism (of representations), and is denoted as $\Hom_G(\rho, \phi)$.
 \end{definition}
 
-We have that $\Hom_G(\rho, \phi)$ is in fact a subspace of $\Hom(V,W)$, and that for any $T$ of $\Hom_G(\rho,\phi)$, we have that both $\ker T$ and $\Im T$ are $G$-invariant subspaces. The $\ker T$ follows easily from commutativity, and the $\Im T$ fact from considering some $w = Tv$, and then $\rho(g)w = T\phi(g)v \in \Im T$.
+We have that $\Hom_G(\rho, \phi)$ is in fact a subspace of $\Hom(V,W)$, and that for any $T$ of $\Hom_G(\rho,\phi)$, we have that both $\ker T$ and $\Im T$ are $G$-invariant subspaces. The $\ker T$ fact follows easily from commutativity, and the $\Im T$ fact from considering some $w = Tv$, and then $\rho(g)w = T\phi(g)v \in \Im T$.
 
 It turns out that with vector fields whose underlying field is algebraically closed, say, $\overline{\FF}$, these are particularly nice.
 \begin{theorem}
@@ -137,16 +137,16 @@ The irreducible representations of an abelian group have degree one, and any com
 Consequently, for any $A \in \GL_n(\CC)$ of finite order $k$, $A$ is diagonalizable and if $A^k = I$, then all of the eigenvalues of $A$ are $k$-th roots of unity.
 \end{corollary}
 \begin{proof}
-This first statement actually follows really nicely from the fact that the number of irreducible characters is equal to the number of conjugacy classes. Alternatively, note that $\rho(g)\rho(h) = \rho(h)\rho(g)$, and so $\rho(g)$ is an intertwining transformation, so $\rho(g) = \lambda_g I$. Now, since $\CC v$ is going to be a $G$-invariant subspace for some fixed $v$, we have that $V = \CC v$. The back half of the statement then follows from the fact that with the right basis, the $\rho(g_i)$ become a block matrix with all $1 \times 1$ blocks, since every irreducible representation has degree one.
+This first statement follows nicely from the fact that the number of irreducible characters is equal to the number of conjugacy classes. Alternatively, note that $\rho(g)\rho(h) = \rho(h)\rho(g)$, and so $\rho(g)$ is an intertwining transformation, so $\rho(g) = \lambda_g I$. Now, since $\CC v$ is going to be a $G$-invariant subspace for any nonzero $v$, we have that $V = \CC v$ and is invarient. The back half of the statement then follows from the fact that with the right basis, the $\rho(g_i)$ become a block matrix with all $1 \times 1$ blocks, since every irreducible representation has degree one.
 
-Now, we have a fairly natural representation given by $\rho : \ZZ_n \to \GL_n(\CC)$, where $\rho(a) = A^a$, and we get for free that $A$ is diagonalizable, and the eigenvalue fact is simple enough.
+Now, we have a fairly natural representation given by $\rho : \ZZ_k \to \GL_n(\CC)$, where $\rho(a) = A^a$, and we get for free that $A$ is diagonalizable, and the eigenvalue fact is simple enough.
 \end{proof}
 
 \begin{definition}
-(Group algebra) Define $L(G) = \CC^G = \{ f \ | \ f \ : \ G \to \CC \}$ with the usual linearity, and inner product $$\langle f_1, f_2 \rangle = \frac{1}{|G|} \sum_{g \in G} \overline{f_1(g)}f_2(g).$$
+(Group algebra) Define $L(G) = \CC^G = \{ f \ | \ f : G \to \CC \}$ with the usual linearity, and inner product $$\langle f_1, f_2 \rangle = \frac{1}{|G|} \sum_{g \in G} \overline{f_1(g)}f_2(g).$$
 \end{definition}
 
-Also, for a bit of notation, we have $\rho_{ij}(g) = (\rho(g))_{ij}$ be the $ij$th entry of the matrix corresponding to $\rho(g)$. And in this section, we have representations $\rho, \ \phi$ which map to $\GL(V), \ \GL(W)$, respectively, and we let $P \ : \ \Hom(V,W) \to \Hom(V,W)$ send elements of $T \in \Hom(V,W)$ to $$\frac{1}{|G|} \sum_{g \in G} \phi(g^{-1})T\rho(g)$$.
+Also, for a bit of notation, we have $\rho_{ij}(g) = (\rho(g))_{ij}$ be the $ij$th entry of the matrix corresponding to $\rho(g)$. And in this section, we have representations $\rho, \ \phi$ which map to $\GL(V), \ \GL(W)$, respectively, and we let $P : \Hom(V,W) \to \Hom(V,W)$ send elements of $T \in \Hom(V,W)$ to $$\frac{1}{|G|} \sum_{g \in G} \phi(g^{-1})T\rho(g)$$.
 
 \begin{lemma}
 For any $T \in \Hom(V,W)$, we have that\ldots
@@ -165,7 +165,7 @@ For (b), we have that $\phi(g^{-1})T\rho(g)=\phi(g^{-1})\phi(g)T=T$, and $\frac{
 
 \end{proof}
 
-Note that as a result, we have that if $\rho \not\sim \phi$, and $T \ : \ V \to W$, then $P(T) = 0$, since $P(T) \in \Hom_G(\rho,\phi),$ and if $\rho \sim \phi,$ then $P(T) = \frac{\tr (T)}{\deg \rho} I.$ This last fact follows from the fact that $\tr P(T)= \tr \left( \lambda I \right) = \lambda \deg \phi$, which implies that $P(T) = \frac{\tr P(T)}{\deg \rho} = \frac{\tr T}{\deg \rho}$ (due to summing similar matrices). 
+Note that as a result, we have that if $\rho \not\sim \phi$, and $T : V \to W$, then $P(T) = 0$, since $P(T) \in \Hom_G(\rho,\phi),$ and if $\rho \sim \phi,$ then $P(T) = \frac{\tr (T)}{\deg \rho} I.$ This last fact follows from the fact that $\tr P(T)= \tr \left( \lambda I \right) = \lambda \deg \phi$, which implies that $P(T) = \frac{\tr P(T)}{\deg \rho} = \frac{\tr T}{\deg \rho}$ (due to summing similar matrices). 
 
 We can also consider $P$ as a linear operator on $\Hom(V,W)$, and we want to compute the matrix of $P$ with respect to the standard basis $E_{ij}$ (whose only nonzero entry is a $1$ in the $ij$th entry). Note that for 3 appropriately sized matrices, $(AE_{ki}B)_{\ell j} = a_{\ell k}b_{ij}$.
 

@@ -26,15 +26,12 @@ leanproject get TwoFx/sudoku
 ###################################
 #          Jekyll Website         #
 ###################################
-# This was actually ridiculously painful
-# Make sure that ruby is decently new (>2.5)
-# Install bundler
-# Default tutorial is good enough
-# to create a new website use `bundle exec jekyll new`
-# don't mess around with the gems too much!
-# To add MathJax, you have to insert a js to a _layouts/default.html
+#This was actually ridiculously painful
+#Make sure that ruby is decently new (>2.5)
+#Install bundler
+#Default tutorial is good enough
+#to create a new website use `bundle exec jekyll new`
+#don't mess around with the gems too much!
+#To add MathJax, you have to insert a js to a _layouts/default.html
 git clone https://github.com/mushokunosora/mushokunosora.github.io
-# To build locally use
-bundle exec jekyll serve
-# and use this to clean up trashed files
-bundle exec jekyll clean
+

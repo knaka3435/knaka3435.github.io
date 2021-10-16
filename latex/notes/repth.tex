@@ -14,6 +14,14 @@
 \section*{Introduction}
 Initial section is based off of Steinberg's ``Theory of Finite Groups'', which gives a brief overview of some of the traditional results of representation theory. The middle section follows Sagan's ``The Symmetric Group,'' while the modular theory uses more of Serre's ``Linear Representations of Finite Groups'' and Alperin's ``Local Representation Theory.'' Or at least, tentatively.
 
+\subsection{Improvements to make}
+\begin{itemize}
+    \item In section 2.2, Note 13, make the interpretation more explicit and more intuitive. Currently, it says a whole lot of nothing.
+    \item Currently a lot of gaps in the theory is present and only the more basic properties of things like induced representations are explained.
+    \item Include more difficult concepts in the intro such as Grothendieck group, projective modules, etc.
+    \item Include a smattering of local ring theory results as an interlude before the modular parts.
+\end{itemize}
+
 \subsection{Roadmap}
 Begin by developing some of the classical results through Steinberg and by the first two sections of Serre.
 
@@ -184,6 +192,8 @@ This is a routine calculation,
 \end{proof}
 
 \begin{note}
+%TODO: come up with a way to explain this, I'm garbage right not
+
 Currently, this is horribly unintuitive. We can think of $P$ as being a $m \times m$ block matrix whose blocks are themselves $n \times n$ matrices.
 \end{note}
 
@@ -203,7 +213,29 @@ In other words, looking at modules and algebras because I have no idea what I'm 
 \section{Characteristic 0: Symmetric Group}
 
 
+\section{Interlude: Grothendieck Groups, Projectiveness}
+The theory of modular representations is a rather involved one that requires more knowledge that isn't typically encountered until later. As such, this interlude serves as a brief introduction and hopefully serves as some nice intuition before going into using it.
+
+\subsection{Grothendieck Groups}
+
+Recall that a commutative monoid $M$ is essentially a group without inverses. That is, there exists an identity, $0 \in M$ such that $x+0=0+x=x$ and it is closed under the operation, $x+y \in M$ for any $x,y \in M$.
+
+Now, we want to construct an abelian group out of it. We consider $M \times M$ as a monoid where the operation is given by coordinate addition. Next, we quotient it out by the relation $\sim$, where $(m,n) \sim (m',n')$ if $m+n'+k = m'+n+k$ for some $k \in M$. Then, $(M \times M)/\sim$ is going to be a group, as $(m,n)+(n,m) = (n+m,n+m) \sim (0,0)$.
+
+This construction is based on trying to make $\NN$ into a group. We want $m-n=m'-n'$ to if and only if $(m,n) \sim (m',n')$, however, $-n$ isn't well defined, so we need to add to both sides. However, something less intuitive is that we also need to add something to both sides due to the fact that in some commutative monoids, the cancellation law doesn't hold (i.e. $m+n=m+n'$ does not necessarily imply that $n=n'$).
+
+In the case of the Grothendieck group of $R$-modules, one has to be a bit careful, as the class of all $R$-modules isn't a set, and so, the class only distinguishes $R$-modules up to isomorphism. 
+
+\subsection{Projective Modules}
+
+\begin{definition}
+An $R$-module $P$ is called \vocab{projective} if there exists some $R$-module $M$ such that $R^n \cong P \oplus M$ for some $n > 0$. 
+\end{definition}
+
+
 \section{Modular Representations}
+
+
 
 \section{Characteristic p: Symmetric Group}
 
